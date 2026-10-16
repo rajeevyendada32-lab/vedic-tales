@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart | Vedic Tales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; background: #faf6ef; color: #3e2723; padding: 0; }
+        header { background: linear-gradient(135deg, #fdfbf7 0%, #f4ebd9 100%); border-bottom: 1px solid #d7ccc8; padding: 30px 40px; }
+        .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; color: #6d4c41; letter-spacing: 3px; text-decoration: none; }
+        
+        .container { max-width: 900px; margin: 60px auto; padding: 40px; background: #fff; border: 1px solid #e8ddd0; border-radius: 4px; box-shadow: 0 4px 24px rgba(109,76,65,0.08); }
+        .back { color: #8d6e63; text-decoration: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
+        .back:hover { color: #4e342e; }
+        h1 { font-family: 'Cinzel', serif; font-size: 32px; color: #4e342e; margin-bottom: 30px; letter-spacing: 2px; border-bottom: 1px solid #e8ddd0; padding-bottom: 20px; }
+        
+        .cart-item { display: flex; align-items: center; gap: 30px; padding: 25px 0; border-bottom: 1px solid #f0e8dc; }
+        .cart-item img { width: 90px; height: 120px; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 12px rgba(78,52,46,0.15); }
+        .cart-item-info { flex: 1; }
+        .cart-item-info h3 { font-family: 'Cinzel', serif; font-size: 18px; color: #4e342e; margin-bottom: 8px; font-weight: 600; }
+        .cart-item-info p { color: #6d4c41; font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; }
+        .remove-btn { background: transparent; color: #a1887f; border: 1px solid #d7ccc8; padding: 10px 20px; border-radius: 2px; cursor: pointer; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; }
+        .remove-btn:hover { background: #d32f2f; color: white; border-color: #d32f2f; }
+        
+        .total-row { text-align: right; font-family: 'Cinzel', serif; font-size: 26px; font-weight: 700; color: #6d4c41; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e8ddd0; letter-spacing: 1px; }
+        
+        .checkout-btn { display: block; width: 100%; background: #6d4c41; color: #fdfbf7; padding: 20px; border: none; border-radius: 2px; font-size: 15px; cursor: pointer; margin-top: 30px; text-decoration: none; text-align: center; letter-spacing: 4px; text-transform: uppercase; transition: all 0.3s; font-family: 'Lora', serif; }
+        .checkout-btn:hover { background: #3e2723; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(78,52,46,0.3); }
+        
+        .empty { text-align: center; padding: 60px 20px; color: #8d6e63; font-style: italic; font-size: 18px; }
+        footer { text-align: center; padding: 40px 20px; color: #8d6e63; font-size: 13px; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="/" class="brand">VEDIC TALES</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back">← Continue Shopping</a>
+        <h1>Your Cart</h1>
+
+        <% if (books.length === 0) { %>
+            <div class="empty">
+                <p>Your cart is empty.</p>
+                <a href="/" class="checkout-btn" style="max-width: 300px; margin: 30px auto;">Browse Collection</a>
+            </div>
+        <% } else { %>
+            <% books.forEach(book => { %>
+                <div class="cart-item">
+                    <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+                    <div class="cart-item-info">
+                        <h3><%= book.title %></h3>
+                        <p>₹<%= book.price %></p>
+                    </div>
+                    <form action="/remove-from-cart/<%= book._id %>" method="POST">
+                        <button type="submit" class="remove-btn">Remove</button>
+                    </form>
+                </div>
+            <% }); %>
+            <div class="total-row">Total: ₹<%= total %></div>
+            <a href="/checkout" class="checkout-btn">Proceed to Checkout</a>
+        <% } %>
+    </div>
+
+    <footer>© VEDIC TALES · HANDCRAFTED WITH DEVOTION</footer>
+</body>
+</html>
